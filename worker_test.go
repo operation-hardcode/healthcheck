@@ -8,7 +8,7 @@ import (
 func TestWorkerAddJob(t *testing.T) {
 	w := NewWorker()
 
-	w.AddJob(NewJob("1", time.Millisecond, func(j job) {
+	w.AddJob(NewJob("1", time.Millisecond, func(j Job) {
 		j.Cancel()
 	}))
 
@@ -26,8 +26,8 @@ func TestWorkerAddJob(t *testing.T) {
 func TestWorkerCancelJobById(t *testing.T) {
 	w := NewWorker()
 
-	job1 := NewJob("1", time.Millisecond, func(j job) {})
-	job2 := NewJob("2", time.Millisecond, func(j job) {})
+	job1 := NewJob("1", time.Millisecond, func(j Job) {})
+	job2 := NewJob("2", time.Millisecond, func(j Job) {})
 
 	w.AddJob(job1)
 	w.AddJob(job2)

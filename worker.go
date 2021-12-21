@@ -6,21 +6,21 @@ import (
 	"syscall"
 )
 
-type worker struct {
-	jobs map[JobId]*job
+type Worker struct {
+	jobs map[JobId]*Job
 }
 
-func NewWorker() *worker {
-	return &worker{jobs: map[JobId]*job{}}
+func NewWorker() *Worker {
+	return &Worker{jobs: map[JobId]*Job{}}
 }
 
-func (w *worker) AddJob(j *job) {
+func (w *Worker) AddJob(j *Job) {
 	w.jobs[j.id] = j
 
 	j.Start()
 }
 
-func (w *worker) CancelJob(jid JobId) {
+func (w *Worker) CancelJob(jid JobId) {
 	job, ok := w.jobs[jid]
 
 	if ok {
@@ -30,7 +30,7 @@ func (w *worker) CancelJob(jid JobId) {
 	}
 }
 
-func (w *worker) CancelJobs() {
+func (w *Worker) CancelJobs() {
 	for _, job := range w.jobs {
 		job.Cancel()
 
@@ -38,11 +38,11 @@ func (w *worker) CancelJobs() {
 	}
 }
 
-func (w *worker) Size() int {
+func (w *Worker) Size() int {
 	return len(w.jobs)
 }
 
-func (w *worker) Work() <-chan struct{} {
+func (w *Worker) Work() <-chan struct{} {
 	quit := make(chan struct{})
 
 	signals := make(chan os.Signal, 1)

@@ -8,7 +8,7 @@ import (
 func TestJob(t *testing.T) {
 	count := 0
 
-	j := NewJob("1", time.Millisecond, func(j job) {
+	j := NewJob("1", time.Millisecond, func(j Job) {
 		count++
 		j.Cancel()
 	})

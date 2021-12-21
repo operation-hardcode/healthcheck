@@ -8,9 +8,9 @@ import (
 type (
 	JobId string
 
-	handler func(job)
+	handler func(Job)
 
-	job struct {
+	Job struct {
 		id          JobId
 		ctx         context.Context
 		cancel      context.CancelFunc
@@ -19,10 +19,10 @@ type (
 	}
 )
 
-func NewJob(id JobId, healthcheck time.Duration, h handler) *job {
+func NewJob(id JobId, healthcheck time.Duration, h handler) *Job {
 	ctx, cancel := context.WithCancel(context.Background())
 
-	return &job{
+	return &Job{
 		id:          id,
 		ctx:         ctx,
 		cancel:      cancel,
@@ -31,7 +31,7 @@ func NewJob(id JobId, healthcheck time.Duration, h handler) *job {
 	}
 }
 
-func (j *job) Start() {
+func (j *Job) Start() {
 	go func() {
 		ticker := time.NewTicker(j.healthcheck)
 
@@ -48,6 +48,6 @@ func (j *job) Start() {
 	}()
 }
 
-func (j *job) Cancel() {
+func (j *Job) Cancel() {
 	j.cancel()
 }
