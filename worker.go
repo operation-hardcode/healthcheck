@@ -24,9 +24,9 @@ func (w *worker) CancelJob(jid JobId) {
 	job, ok := w.jobs[jid]
 
 	if ok {
-		delete(w.jobs, job.id)
-
 		job.Cancel()
+
+		delete(w.jobs, job.id)
 	}
 }
 
